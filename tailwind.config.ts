@@ -8,6 +8,19 @@ const config: Config = {
   ],
   theme: {
     extend: {
+      fontFamily: {
+        "libre": "LibreFranklin-R",
+        "libre-m": "LibreFranklin-M",
+        "libre-sb": "LibreFranklin-SB",
+        "libre-b": "LibreFranklin-B"
+      },
+      colors: {
+        "primary-gold": "#f99f1b",
+        "primary-charcol": "#3a3c3e",
+        "primary-blue": "#0085ab",
+        "secondary-gold": "#ffc60a",
+        "secondary-blue": "#87d6f6"
+      },
       backgroundImage: {
         "gradient-radial": "radial-gradient(var(--tw-gradient-stops))",
         "gradient-conic":
