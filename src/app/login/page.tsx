@@ -7,7 +7,7 @@ const LoginPage = () => {
     const { data: session, status } = useSession()
 
     if (session) {
-        redirect('/')
+        redirect('/dashboard')
     }
 
     return (
