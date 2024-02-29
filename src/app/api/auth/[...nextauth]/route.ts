@@ -1,7 +1,7 @@
-import NextAuth from "next-auth";
+import NextAuth, { AuthOptions } from 'next-auth'
 import Auth0Provider from "next-auth/providers/auth0";
 
-const handler = NextAuth({
+const options: AuthOptions ={
     providers: [
         Auth0Provider({
             clientId: process.env.AUTH0_CLIENT_ID || '',
@@ -13,10 +13,9 @@ const handler = NextAuth({
     callbacks: {
 
         async redirect(params: { url: string, baseUrl: string }) {
-            console.log(params)
             return params.url.startsWith(params.baseUrl)
                 ? params.url
-                : params.baseUrl + `/dashboard?nextAuth=${encodeURIComponent(params.url)}`;
+                : params.baseUrl + '/dashboard';
         },
 
         async jwt({ token, account }) {
@@ -32,6 +31,6 @@ const handler = NextAuth({
             return session
         }
     }
-})
-
+}
+const handler = NextAuth(options)
 export { handler as GET, handler as POST}
