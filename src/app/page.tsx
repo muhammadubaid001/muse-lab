@@ -5,9 +5,8 @@ import { redirect } from 'next/navigation'
 
 export default function Home() {
     const { data: session, status } = useSession()
-
    if(session) {
-       redirect("/dashboard")
+      return  redirect("/dashboard")
    }
 
    return null
