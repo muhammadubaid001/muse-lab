@@ -1,14 +1,9 @@
 'use client'
 import { signIn, useSession } from 'next-auth/react'
-import { redirect } from 'next/navigation'
 import { PrimaryButton } from '@/components/ui/Button'
 
 const LoginPage = () => {
     const { data: session, status } = useSession()
-
-    if (session) {
-        redirect('/dashboard')
-    }
 
     return (
         <div className='flex flex-col items-center justify-center h-screen bg-gray-50'>

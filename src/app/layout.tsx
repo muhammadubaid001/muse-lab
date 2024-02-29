@@ -2,7 +2,6 @@ import type { Metadata } from 'next'
 import AuthProvider from './context/AuthProvider'
 
 import './globals.css'
-import Link from 'next/link'
 
 export const metadata: Metadata = {
     title: 'Muse Lab',
@@ -24,7 +23,6 @@ export default function RootLayout({ children }: Readonly<{
         <html lang='en'>
         <AuthProvider>
             <body className='font-libre antialiased'>
-
             {children}
             </body>
         </AuthProvider>
