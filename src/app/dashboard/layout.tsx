@@ -7,7 +7,7 @@ import { Loader } from '@/components/Loader'
 export default function DashboardLayout({ children }: { children: React.ReactNode }) {
     const { data, status } = useSession()
 
-    if(status === 'loading') {
+    if (status === 'loading') {
         return <Loader />
     }
 

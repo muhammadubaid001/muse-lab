@@ -27,11 +27,11 @@ export const NavLink: FC<Props> = ({ active, to, icon, label, className }) => {
                 )}>
                 <div
                     className={cn(
-                        "flex items-center gap-x-6 font-libre-sb w-full rounded-lg px-4 py-3",
+                        "flex text-sm items-center tracking-wide gap-x-6 font-libre-sb w-full rounded-lg px-4 py-2.5",
                         {
                             "text-primary-gold bg-primary-gold/10 ":
                             active,
-                            "hover:text-primary-gold hover:bg-primary-gold/10": !active,
+                            "hover:text-primary-gold text-primary-charcol hover:bg-primary-gold/10": !active,
                         },
                     )}>
                     {icon}

@@ -8,6 +8,9 @@ const config: Config = {
   ],
   theme: {
     extend: {
+      animation: {
+        'slow': 'spin 2s linear infinite',
+      },
       fontFamily: {
         "libre": "LibreFranklin-R",
         "libre-m": "LibreFranklin-M",

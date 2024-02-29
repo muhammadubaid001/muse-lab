@@ -9,8 +9,8 @@ export const metadata: Metadata = {
     icons: {
         icon: [
             {
-                url: '/favicon.png',
-                href: '/favicon.png',
+                url: '/icon.png',
+                href: '/icon.png',
             },
         ],
     },
@@ -21,11 +21,11 @@ export default function RootLayout({ children }: Readonly<{
 }>) {
     return (
         <html lang='en'>
-        <AuthProvider>
-            <body className='font-libre antialiased'>
-            {children}
-            </body>
-        </AuthProvider>
+            <AuthProvider>
+                <body className="font-libre antialiased">
+                {children}
+                </body>
+            </AuthProvider>
         </html>
     )
 }
