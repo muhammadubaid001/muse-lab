@@ -24,20 +24,29 @@ export const Sidebar = () => {
                             </div>
                         </div>
                         <nav className='flex-1 mt-1'>
-                            <NavLink active={pathname === '/dashboard'} label='Users' to='/dashboard' icon={<Profile2User
-                                size="26"
-
-                            />} />
-                            <NavLink active={pathname === '/dashboard/applications'} label='Applications' icon={<Category size="26" />}
-                                     to='/dashboard/applications' />
-                            <NavLink active={pathname === '/dashboard/tenants'} label='Tenants' icon={<UserOctagon size="26"/>}
-                                     to='/dashboard/tenants' />
+                            <NavLink
+                                active={pathname === '/dashboard'}
+                                label='Users' to='/dashboard'
+                                icon={<Profile2User size="26" />}
+                            />
+                            <NavLink
+                                active={pathname === '/dashboard/applications'}
+                                label='Applications'
+                                icon={<Category size="26" />}
+                                to='/dashboard/applications'
+                            />
+                            <NavLink
+                                active={pathname === '/dashboard/tenants'}
+                                label='Tenants'
+                                icon={<UserOctagon size="26"/>}
+                                to='/dashboard/tenants'
+                            />
                         </nav>
                     </div>
                 </div>
                 <div className='p-4'>
                     <div className='border-t w-full border-gray-200 flex items-center gap-4 py-5 pl-5'>
-                        <div className='rounded-full overflow-hidden h-12 w-12 bg-gray-400'>
+                        <div className='rounded-full overflow-hidden h-12 w-12'>
                             <img
                                 alt='illustration'
                                 className='h-full w-full rounded-full object-cover'
