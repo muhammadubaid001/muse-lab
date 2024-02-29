@@ -2,6 +2,7 @@
 import { NavLink } from '@/components/dashboard/NavLink'
 import { usePathname } from 'next/navigation'
 import { signOut, useSession } from 'next-auth/react'
+import { Category, Profile2User, UserOctagon } from 'iconsax-react'
 
 export const Sidebar = () => {
     const pathname = usePathname()
@@ -23,9 +24,14 @@ export const Sidebar = () => {
                             </div>
                         </div>
                         <nav className='flex-1 mt-1'>
-                            <NavLink active={pathname === '/dashboard'} label='Users' to='/dashboard' />
-                            <NavLink active={pathname === '/dashboard/applications'} label='Applications'
+                            <NavLink active={pathname === '/dashboard'} label='Users' to='/dashboard' icon={<Profile2User
+                                size="26"
+
+                            />} />
+                            <NavLink active={pathname === '/dashboard/applications'} label='Applications' icon={<Category size="26" />}
                                      to='/dashboard/applications' />
+                            <NavLink active={pathname === '/dashboard/tenants'} label='Tenants' icon={<UserOctagon size="26"/>}
+                                     to='/dashboard/tenants' />
                         </nav>
                     </div>
                 </div>
