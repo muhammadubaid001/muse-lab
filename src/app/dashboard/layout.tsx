@@ -12,9 +12,11 @@ export default function DashboardLayout({ children }: { children: React.ReactNod
     }
 
     return (
-        <div className='flex h-screen bg-gray-50 gap-2'>
+        <div className='flex h-screen bg-gray-50'>
             <Sidebar />
-            {children}
+           <main className="w-full p-5">
+               {children}
+           </main>
         </div>
     )
 
