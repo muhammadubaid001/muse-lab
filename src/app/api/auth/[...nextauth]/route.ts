@@ -9,7 +9,16 @@ const handler = NextAuth({
             issuer: process.env.AUTH0_ISSUER_BASE_URL
         })
     ],
+
     callbacks: {
+
+        // async redirect(params: { url: string, baseUrl: string }) {
+        //     console.log(params)
+        //     return params.url.startsWith(params.baseUrl)
+        //         ? params.url
+        //         : params.baseUrl + `/dashboard?nextAuth=${encodeURIComponent(params.url)}`;
+        // },
+
         async jwt({ token, account }) {
             // Persist the OAuth access_token to the token right after signin
             if (account) {

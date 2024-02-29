@@ -1,13 +1,21 @@
 import { type NextRequest, NextResponse } from 'next/server'
 
-export function middleware (request: NextRequest) {
-    console.log(request)
-    const token = request.cookies.get('next-auth.session-token')
-    if(!token?.value) {
-        return NextResponse.redirect(new URL('/login', request.url))
+export function middleware (req: NextRequest) {
+    const token = req.cookies.get('next-auth.session-token')
+
+    if (req.nextUrl.pathname === '/login' && token) {
+        return NextResponse.redirect(new URL('/dashboard', req.url))
+    }
+    if (req.nextUrl.pathname.startsWith('/dashboard') && !token) {
+        return NextResponse.redirect(new URL('/login', req.url))
     }
 
-    return NextResponse.next()
+    if (req.nextUrl.pathname === '/' && token) {
+        return NextResponse.redirect(new URL('/dashboard', req.url))
+    }
+
+    return NextResponse.next()  ;
+
 }
 
 export const config = {

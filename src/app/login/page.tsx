@@ -7,7 +7,7 @@ const LoginPage = () => {
     const { data: session, status } = useSession()
 
     if (session) {
-        return redirect('/dashboard')
+        redirect('/dashboard')
     }
 
     return (
@@ -19,7 +19,7 @@ const LoginPage = () => {
                 type='button'
                 label='Login'
                 className='px-12 py-2.5'
-                onClick={() => signIn('auth0', { showPrompt: true })}
+                onClick={() => signIn('auth0', { callbackUrl: "/dashboard", showPrompt: true })}
             />
         </div>
     )
