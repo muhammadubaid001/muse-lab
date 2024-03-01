@@ -23,6 +23,8 @@ export interface ITable {
     pagination?: any;
     filters?: any;
     columns: any;
+    onRow?: any
+    onRowFieldName?: string;
     loadingData?: boolean;
 }
 
@@ -42,6 +44,8 @@ export const Table: FC<ITable> = ({
                                       totalItems,
                                       onSort,
                                       rowSelection,
+    onRow,
+    onRowFieldName = "id"
                                   }) => {
     const [perPage] = useState(
         +pagination?.limit ? pagination?.limit : 10,
@@ -74,7 +78,7 @@ export const Table: FC<ITable> = ({
             return (
                 <td
                     key={col.key}
-                    className="px-4 py-5 text-sm whitespace-nowrap text-gray-900"
+                    className="px-4 py-5 text-sm whitespace-nowrap "
                 >
                     {col.render(data)}
                 </td>
@@ -87,7 +91,7 @@ export const Table: FC<ITable> = ({
                 <td
                     key={col.key}
                     onClick={() => col.render(data)}
-                    className="px-4 py-5 text-sm whitespace-nowrap text-gray-700"
+                    className="px-4 py-5 text-sm whitespace-nowrap "
                 >
                     {col.render(column)}
                 </td>
@@ -96,7 +100,7 @@ export const Table: FC<ITable> = ({
             return (
                 <td
                     key={col.key}
-                    className=" whitespace-nowrap px-4 py-5 text-sm text-gray-700"
+                    className=" whitespace-nowrap px-4 py-5 text-sm "
                 >
                     {column}
                 </td>
@@ -115,15 +119,15 @@ export const Table: FC<ITable> = ({
                     <div className="relative">
                         <div
                             className="absolute inset-y-0 rtl:inset-r-0 start-0 flex items-center ps-3 pointer-events-none">
-                            <svg className="w-4 h-4 text-gray-500 dark:text-gray-400" aria-hidden="true"
+                            <svg className="w-4 h-4 text-gray-400" aria-hidden="true"
                                  xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 20 20">
                                 <path stroke="currentColor" strokeLinecap="round" strokeLinejoin="round"
                                       strokeWidth="2" d="m19 19-4-4m0-7A7 7 0 1 1 1 8a7 7 0 0 1 14 0Z" />
                             </svg>
                         </div>
                         <input type="text" id="table-search-users"
-                               className="block p-2 ps-10 text-sm text-gray-900 border border-gray-300 focus:ring-2 focus:ring-opacity-25 focus:outline-none rounded-lg w-80 focus:ring-primary-gold focus:border-primary-gold"
-                               placeholder="Search for users" />
+                               className="block p-2 ps-10 text-sm text-gray-900 border border-gray-200 focus:ring-2 focus:ring-opacity-25 focus:outline-none rounded-lg w-80 focus:ring-primary-gold focus:border-primary-gold"
+                               placeholder="Search..." />
                     </div>
                 </div>
                 <table className="overflow-auto min-w-full bg-white">
@@ -135,7 +139,7 @@ export const Table: FC<ITable> = ({
                         data={filteredData}
                     />
 
-                    <tbody className="bg-white w-full divide-y divide-y-reverse">
+                    <tbody className="bg-white w-full divide-y  divide-gray-100">
                     <tr>
                         {(filteredData?.length === 0 || !filteredData) &&
                             !loadingData && (
@@ -180,11 +184,21 @@ export const Table: FC<ITable> = ({
                         filteredData?.map((d, index: number) => (
                             <tr
                                 key={index}
+                                onClick={
+                                    onRow
+                                        ? () =>
+                                            onRow(
+                                                d[
+                                                    onRowFieldName
+                                                    ]
+                                            )
+                                        : undefined
+                                }
                                 className={`${
-                                    index % 2 !== 0 ? "bg-gray-50" : "bg-white"
-                                } hover:bg-gray-50`}
+                                    index % 2 === 0 ? "bg-gray-50" : "bg-white"
+                                } hover:bg-gray-50 text-primary-charcol cursor-pointer`}
                             >
-                                <td className="p-5 text-gray-700 text-sm">
+                                <td className="p-5  text-sm">
                                     {pagination && pagination?.page > 1
                                         ? pagination?.limit * pagination?.page + index + 1 - 10
                                         : startIndex + index + 1}

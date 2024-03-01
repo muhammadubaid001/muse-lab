@@ -11,6 +11,9 @@ const config: Config = {
       animation: {
         'slow': 'spin 2s linear infinite',
       },
+      boxShadow: {
+        "tab": "rgba(16, 24, 40, 0.1) 0px 1px 3px, rgba(16, 24, 40, 0.06) 0px 1px 2px"
+      },
       fontFamily: {
         "libre": "LibreFranklin-R",
         "libre-m": "LibreFranklin-M",

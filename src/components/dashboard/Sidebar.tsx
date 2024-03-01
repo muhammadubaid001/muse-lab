@@ -36,7 +36,7 @@ export const Sidebar = () => {
                                 to='/dashboard/applications'
                             />
                             <NavLink
-                                active={pathname === '/dashboard/tenants'}
+                                active={pathname.includes('tenants')}
                                 label='Tenants'
                                 icon={<UserOctagon size="26"/>}
                                 to='/dashboard/tenants'

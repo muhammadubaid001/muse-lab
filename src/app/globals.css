@@ -41,6 +41,10 @@
     box-shadow: rgb(255, 255, 255) 4px 4px 0px -3px, #87d6f6 4px 4px
 }
 
+.tab_shadow {
+box-shadow: rgba(16, 24, 40, 0.1) 0px 1px 3px, rgba(16, 24, 40, 0.06) 0px 1px 2px;
+}
+
 /*:root {*/
 /*  --foreground-rgb: 0, 0, 0;*/
 /*  --background-start-rgb: 214, 219, 220;*/

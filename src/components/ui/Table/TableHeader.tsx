@@ -23,7 +23,7 @@ export const TableHeader: FC<ITable> = ({
     }
 
     return (
-        <thead className="uppercase bg-gray-100  text-xs font-libre-sb text-primary-charcol ">
+        <thead className=" border-t text-xs text-gray-500 ">
             <tr>
                 {rowSelection && (
                     <th className="text-left pl-3 w-14">
@@ -35,7 +35,7 @@ export const TableHeader: FC<ITable> = ({
                         />
                     </th>
                 )}
-                <th className="px-4 py-3 text-left text-sm font-libre-sb text-primary-charcol">
+                <th className="px-4 py-3 text-left">
                     #
                 </th>
                 {columns?.map((col: { key: string, title: string }, i: number) => (
@@ -46,9 +46,7 @@ export const TableHeader: FC<ITable> = ({
                         ${
                             col.key === "key" ? "flex" : ""
                         } whitespace-nowrap`}>
-                        <span className="flex items-center gap-1">
                             {col.title}
-                        </span>
                     </th>
                 ))}
             </tr>

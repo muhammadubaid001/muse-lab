@@ -1,6 +1,6 @@
 import type { Metadata } from 'next'
 import AuthProvider from './context/AuthProvider'
-
+import NextTopLoader from 'nextjs-toploader';
 import './globals.css'
 
 export const metadata: Metadata = {
@@ -23,7 +23,8 @@ export default function RootLayout({ children }: Readonly<{
         <html lang='en'>
             <AuthProvider>
                 <body className="font-libre antialiased">
-                {children}
+                <NextTopLoader showSpinner={false} color="#f99f1b" />
+                    {children}
                 </body>
             </AuthProvider>
         </html>

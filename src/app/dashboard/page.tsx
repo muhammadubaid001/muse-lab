@@ -3,6 +3,7 @@ import { Table } from '@/components/ui/Table/Table'
 import { useEffect, useState } from "react"
 import useAxiosAuth from '@/lib/hooks/useAxiosAuth'
 import { Breadcrumb } from '@/components/Breadcrumb'
+import { useRouter } from "next/navigation"
 
 export default function Page() {
     const columns = [
@@ -31,13 +32,17 @@ export default function Page() {
         })
     }, [])
 
+    const router = useRouter()
+
     return (
         <div className="flex flex-col gap-2">
             <Breadcrumb label="Users" />
             <Table
-                data={[]}
+                onRow={(id) => router.push(`/dashboard/tenant/${id}`)}
+                data={data}
                 loadingData={loading}
-                columns={columns} totalItems={0}
+                columns={columns}
+                totalItems={0}
             />
         </div>
     )
