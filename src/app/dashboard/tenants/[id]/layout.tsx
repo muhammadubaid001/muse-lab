@@ -5,7 +5,7 @@ import { Breadcrumb } from "@/components/Breadcrumb"
 import { useParams, usePathname, useRouter } from "next/navigation"
 import Link from "next/link"
 
-const TenantLayout = ({ children, repos, users, jobs }) => {
+const TenantLayout = ({ children }) => {
     const tab: string = "Candidates"
 
     const { id } = useParams()
