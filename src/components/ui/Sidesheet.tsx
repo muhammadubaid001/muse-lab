@@ -48,10 +48,10 @@ export const SideSheet: FC<Props> = ({
                                 leaveFrom="translate-x-0"
                                 leaveTo="translate-x-full"
                             >
-                                <Dialog.Panel className="pointer-events-auto relative w-screen max-w-lg border-l border-gray-200">
+                                <Dialog.Panel className="pointer-events-auto relative w-screen max-w-md border-l border-gray-200">
                                     <div className="flex h-full flex-col overflow-y-scroll bg-white">
                                         <Dialog.Title className="flex gap-4 items-center font-libre-b border-b p-5">
-                                            <button type="button" className="text-gray-600" onClick={() => setSidebarOpen(false)}>
+                                            <button type="button" className="text-gray-600 focus:outline-none" onClick={() => setSidebarOpen(false)}>
                                                 <CloseIcon />
                                             </button>
                                             <p className="text-xl text-primary-charcol">{title}</p>

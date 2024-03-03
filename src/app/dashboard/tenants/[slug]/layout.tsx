@@ -4,16 +4,17 @@ import { ArrowLeft } from "iconsax-react"
 import { Breadcrumb } from "@/components/Breadcrumb"
 import { useParams, usePathname, useRouter } from "next/navigation"
 import Link from "next/link"
+import { Fragment } from "react"
 
 const TenantLayout = ({ children }) => {
-    const tab: string = "Candidates"
+    const tab: string = "Candslugates"
 
-    const { id } = useParams()
+    const { slug } = useParams()
     const router = useRouter()
     const pathname = usePathname()
 
     return (
-        <div>
+        <Fragment>
             <div className="flex items-center gap-2">
                 <button type="button" onClick={() => router.push('/dashboard/tenants')}
                         className="bg-white border border-gray-200 px-3 py-2 rounded-md">
@@ -24,15 +25,15 @@ const TenantLayout = ({ children }) => {
             <div className="text-sm p-1.5 mt-4 text-center text-gray-500 border border-gray-200 rounded-md bg-gray-100">
                 <div className="flex flex-wrap -mb-px gap-3">
                     <Link
-                        href={`/dashboard/tenants/${id}`}
+                        href={`/dashboard/tenants/${slug}`}
                         className={classNames(tabStyles.default, {
-                            [tabStyles.active]: pathname === `/dashboard/tenants/${id}`,
+                            [tabStyles.active]: pathname === `/dashboard/tenants/${slug}`,
                         })}
                     >
                         Github Orgs
                     </Link>
                     <Link
-                        href={`/dashboard/tenants/${id}/repos`}
+                        href={`/dashboard/tenants/${slug}/repos`}
                         className={classNames(tabStyles.default, {
                             [tabStyles.active]: pathname.includes("repos"),
                         })}
@@ -40,7 +41,7 @@ const TenantLayout = ({ children }) => {
                         Github Repos
                     </Link>
                     <Link
-                        href={`/dashboard/tenants/${id}/users`}
+                        href={`/dashboard/tenants/${slug}/users`}
                         className={classNames(tabStyles.default, {
                             [tabStyles.active]: pathname.includes("users"),
                         })}
@@ -48,7 +49,7 @@ const TenantLayout = ({ children }) => {
                         Github Users
                     </Link>
                     <Link
-                        href={`/dashboard/tenants/${id}/jobs`}
+                        href={`/dashboard/tenants/${slug}/jobs`}
                         className={classNames(tabStyles.default, {
                             [tabStyles.active]: pathname.includes("jobs"),
                         })}
@@ -58,7 +59,7 @@ const TenantLayout = ({ children }) => {
                 </div>
             </div>
             {children}
-        </div>
+        </Fragment>
     )
 }
 

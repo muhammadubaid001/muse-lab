@@ -4,6 +4,7 @@ import { useEffect, useState } from "react"
 import useAxiosAuth from '@/lib/hooks/useAxiosAuth'
 import { Breadcrumb } from '@/components/Breadcrumb'
 import { useRouter } from "next/navigation"
+import { useFetchData } from "@/lib/hooks/useFetchData"
 
 export default function Page() {
     const columns = [
@@ -15,25 +16,7 @@ export default function Page() {
         { key: "updated", dbColName: "updated", title: "Updated at"},
         { key: "actions", dbColName: "actions", title: "Actions"},
     ]
-
-    const data= [
-        { id: "Github", github_id: "21847", owner_id: "", updated: new Date().toLocaleDateString(), created: new Date().toLocaleDateString(), name: "Muhammad Ubaid"},
-        { id: "Github", github_id: "21847", owner_id: "", updated: new Date().toLocaleDateString(), created: new Date().toLocaleDateString(), name: "Muhammad Ubaid"},
-        { id: "Github", github_id: "21847", owner_id: "", updated: new Date().toLocaleDateString(), created: new Date().toLocaleDateString(), name: "Muhammad Ubaid"},
-    ]
-
-    const [loading, setLoading] = useState(false)
-    const axios = useAxiosAuth()
-
-    useEffect(() => {
-        axios.get('/users?tenants=0&limit=100').then(resp => {
-            console.log(resp)
-        }).catch(error => {
-            console.log(error)
-        }).finally(() => {
-            setLoading(false)
-        })
-    }, [])
+    const {data, setData, loading } = useFetchData('/tenants?offset=0&limit=100')
 
     const router = useRouter()
 
@@ -45,6 +28,7 @@ export default function Page() {
                 data={data}
                 loadingData={loading}
                 columns={columns}
+                onRowFieldName="slug"
                 totalItems={0}
             />
         </div>
