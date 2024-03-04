@@ -20,7 +20,7 @@ const SpecificTenant = () => {
             key: "actions",
             dbColName: "id",
             title: "Actions",
-            render: (id) => <DefaultActions id={id} handleDelete={() => handleDelete(id)}
+            render: (id) => <DefaultActions id={id} handleDelete={() => console.log(id)}
                                             onEdit={() => console.log("Edit")} />,
         },
     ]
@@ -30,22 +30,9 @@ const SpecificTenant = () => {
     const { successMessage } = useNotifications()
     const { data, loading } = useFetchData(`/d2x/${slug}/github-orgs`)
 
-    const handleDelete = (id) => {
-        swal(alertConfig).then(willDelete => {
-            if (willDelete) {
-                axios.delete(`/d2x/${slug}/orgs/${id}`).then(resp => {
-                    console.log(resp)
-                    successMessage("Job deleted successfully")
-                })
-            }
-        })
-    }
-
 
     return(
-        <div>
             <Table data={data} loadingData={loading} totalItems={data.length} columns={columns} />
-        </div>
     )
 }
 

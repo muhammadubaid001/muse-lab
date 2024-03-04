@@ -20,7 +20,7 @@ export default function Page() {
             key: "actions",
             dbColName: "id",
             title: "Actions",
-            render: (id) => <DefaultActions id={id} handleDelete={() => handleDelete(id)} onEdit={() => onEdit(id)} />,
+            render: (id) => <DefaultActions id={id} handleDelete={() => handleDelete(id)} onEdit={() => console.log(id)} />,
         },
     ]
 
@@ -34,23 +34,9 @@ export default function Page() {
     const axios = useAxiosAuth()
     const { successMessage } = useNotifications()
 
-    const onEdit = id => {
-        setOpen(true)
-        const findUser: any = data.find((item: { id: string }) => item.id === id)
-        setCurrent({
-            id: findUser.id,
-            username: findUser?.username,
-        })
-    }
-
     const handleDelete = id => {
         swal(alertConfig).then((willDelete) => {
-            if (willDelete) {
-                axios.delete(`/users/${id}`).then(resp => {
-                    console.log(resp)
-                    successMessage("User deleted successfully.")
-                })
-            }
+            console.log(willDelete)
         })
     }
 

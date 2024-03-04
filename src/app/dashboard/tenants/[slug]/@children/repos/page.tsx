@@ -2,11 +2,6 @@
 import { useParams } from "next/navigation"
 import { Table } from "@/components/ui/Table/Table"
 import { useFetchData } from "@/lib/hooks/useFetchData"
-import { DefaultActions } from "@/components/ui/Table/defaultAction"
-import swal from "sweetalert"
-import { alertConfig } from "@/utils/alertConfig"
-import useAxiosAuth from "@/lib/hooks/useAxiosAuth"
-import { useNotifications } from "@/lib/hooks/useNotification"
 
 const Repos = () => {
     const columns = [

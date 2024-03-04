@@ -51,10 +51,7 @@ const Jobs = () => {
     const handleDelete = (id) => {
         swal(alertConfig).then(willDelete => {
             if (willDelete) {
-                axios.delete(`/d2x/${slug}/jobs/${id}`).then(resp => {
-                    console.log(resp)
-                    successMessage("Job deleted successfully")
-                })
+               console.log(willDelete)
             }
         })
     }
@@ -64,8 +61,6 @@ const Jobs = () => {
         const findApp = data.find((item: { id: string }) => item.id === id)
         setCurrent(findApp)
     }
-
-    console.log(current)
 
     return (
         <Fragment>

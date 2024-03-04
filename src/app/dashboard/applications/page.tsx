@@ -38,10 +38,7 @@ export default function Page() {
     const handleDelete = id => {
         swal(alertConfig).then((willDelete) => {
             if(willDelete) {
-                axios.delete(`/applications/${id}`).then(resp => {
-                    console.log(resp)
-                    successMessage("Tenant deleted successfully.")
-                })
+                console.log(willDelete)
             }
         });
     }
@@ -64,19 +61,10 @@ export default function Page() {
         setCurrent(findApp)
     }
 
-    const handleUpdate = () => {
-        axios.put(`/applications/${current.id}`).then(resp => {
-            console.log(resp)
-            setOpen(false)
-        }).catch(error => {
-            console.log(error)
-        })
-    }
-
     return (
         <div className="flex flex-col gap-2">
             <Breadcrumb />
-            <SideSheet handleClickPrimary={handleUpdate} sidebarOpen={open} setSidebarOpen={setOpen} title={current?.name || ''}>
+            <SideSheet handleClickPrimary={() => console.log("Clicked")} sidebarOpen={open} setSidebarOpen={setOpen} title={current?.name || ''}>
                 <div className="flex flex-col gap-3">
                     <Input value={current.name} placeholder="Name" onChange={value => setCurrent({
                         ...current,
