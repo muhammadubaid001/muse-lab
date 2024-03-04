@@ -5,6 +5,9 @@ import useAxiosAuth from '@/lib/hooks/useAxiosAuth'
 import { Breadcrumb } from '@/components/Breadcrumb'
 import { SideSheet } from "@/components/ui/Sidesheet"
 import { useFetchData } from "@/lib/hooks/useFetchData"
+import { DefaultActions } from "@/components/ui/Table/defaultAction"
+import { useNotifications } from "@/lib/hooks/useNotification"
+import swal from "sweetalert"
 
 interface IApplication {
     id: string,
@@ -24,8 +27,36 @@ export default function Page() {
         { key: "owner", dbColName: "owner", title: "Owner", render: (owner) => <p>{owner.username}</p>},
         { key: "created", dbColName: "created", title: "Created at"},
         { key: "updated", dbColName: "updated", title: "Updated at"},
+        { key: "actions", dbColName: "id", title: "Actions", render: (id) => <DefaultActions id={id} handleDelete={() => handleDelete(id)} onEdit={() => console.log("Edit")} />}
     ]
+    const axios = useAxiosAuth()
+    const { successMessage } = useNotifications()
 
+    const handleDelete = id => {
+        swal({
+            title: "Are you sure, you want to delete?",
+            icon: "warning",
+            className: "w-[500px]",
+            buttons: {
+                cancel: {
+                    text: "Cancel",
+                    visible: true,
+                },
+                confirm: {
+                    text: "Delete",
+                    className: "bg-primary text-white",
+                },
+            },
+            dangerMode: true,
+        }).then((willDelete) => {
+            if(willDelete) {
+                axios.delete(`/applications/${id}`).then(resp => {
+                    console.log(resp)
+                    successMessage("Tenant deleted successfully.")
+                })
+            }
+        });
+    }
     const [current, setCurrent] = useState<IApplication | undefined>({
         id: '',
         name: '',

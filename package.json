@@ -19,7 +19,9 @@
     "next-auth": "^4.24.6",
     "nextjs-toploader": "^1.6.6",
     "react": "^18",
-    "react-dom": "^18"
+    "react-dom": "^18",
+    "react-notifications-component": "^4.0.1",
+    "sweetalert": "^2.1.2"
   },
   "devDependencies": {
     "@types/node": "^20",

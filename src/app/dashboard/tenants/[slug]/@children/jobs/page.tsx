@@ -5,38 +5,21 @@ import { useParams } from "next/navigation"
 import { Table } from "@/components/ui/Table/Table"
 import classNames from "classnames"
 import { SideSheet } from "@/components/ui/Sidesheet"
-
-// {
-//     "org_connect_request_id": "00000000-0000-0000-0000-000000000000",
-//     "scratch_create_request_id": "00000000-0000-0000-0000-000000000000",
-//     "org_user_id": "00000000-0000-0000-0000-000000000000",
-//     "repo_id": "00000000-0000-0000-0000-000000000000",
-//     "deployment_id": 12345,
-//     "plan_version_id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
-//     "steps": "string",
-//     "ref": "main",
-//     "running_application_id": "00000000-0000-0000-0000-000000000000",
-//     "running_user_id": "00000000-0000-0000-0000-000000000000",
-//     "id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
-//     "status": "pending",
-//     "log": "",
-//     "exception": "An error occurred while running the job.",
-//     "tenant_id": "00000000-0000-0000-0000-000000000000"
-// }
-
+import { useFetchData } from "@/lib/hooks/useFetchData"
 
 const Badge = ({ status }) => {
     return (
         <span
             className={classNames("px-3 py-1  text-xs text-center rounded-full", {
-                "bg-green-100 text-[#027a48]": status === "Accepted",
-                "bg-red-100 text-[#c01048]": status === "Pending",
+                "bg-green-100 text-[#027a48]": status === "accepted",
+                "bg-red-100 text-[#c01048]": status === "pending",
             })}
         >
             {status}
         </span>
     )
 }
+
 
 const Jobs = () => {
     const columns = [
@@ -46,44 +29,15 @@ const Jobs = () => {
         { key: "status", dbColName: "status", title: "Status", render: (status) => <Badge status={status} /> },
         { key: "exception", dbColName: "exception", title: "Exception" },
     ]
-    const data = [
-        {
-            id: "1",
-            repo_id: "12",
-            org_user_id: "22",
-            ref: "main",
-            status: "Pending",
-            exception: "An error occurred while running the job.",
-        },
-        {
-            id: "2",
-            repo_id: "13",
-            org_user_id: "42",
-            ref: "main",
-            status: "Accepted",
-            exception: "An error occurred while running the job.",
-        },
-    ]
-    const [loading, setLoading] = useState(false)
     const [open, setOpen] = useState(false)
 
     const axios = useAxiosAuth()
-    const { id } = useParams()
-
-    useEffect(() => {
-        setLoading(true)
-        axios.get(`/d2x/${id}/jobs`).then(resp => {
-            console.log(resp)
-        }).catch((error) => {
-            console.log(error)
-        }).finally(() => {
-            setLoading(false)
-        })
-    }, [])
+    const { slug } = useParams()
+    const { data, loading} = useFetchData(`/d2x/${slug}/jobs`)
 
     const handleRowClick = (jobId) => {
         setOpen(true)
-        axios.get(`/d2x/${id}/jobs/${jobId}`).then(resp => {
+        axios.get(`/d2x/${slug}/jobs/${jobId}`).then(resp => {
             console.log(resp)
         }).catch((error) => {
             console.log(error)
@@ -108,7 +62,13 @@ const Jobs = () => {
                     </div>
                 </div>
             </SideSheet>
-            <Table onRow={(id) => handleRowClick(id)} loadingData={loading} data={data} totalItems={2} columns={columns} />
+            <Table
+                onRow={(id) => handleRowClick(id)}
+                loadingData={loading}
+                data={data}
+                totalItems={data.length}
+                columns={columns}
+            />
         </Fragment>
     )
 }

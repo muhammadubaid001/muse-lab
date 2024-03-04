@@ -47,15 +47,9 @@ export const Table: FC<ITable> = ({
                                       onRow,
                                       onRowFieldName = "id",
                                   }) => {
-    const [perPage] = useState(
-        +pagination?.limit ? pagination?.limit : 10,
-    )
+    const [perPage] = useState(10)
     const [currentPage, setCurrentPage] = useState(1)
-    const [searchText] = useState("")
-
-    // const last = currentPage * perPage;
-    // const first = last - perPage;
-    // const current = data?.slice(first, last);
+    const [searchText, setSearchText] = useState("")
 
     const filteredData = data?.filter(
         (item: { [x: string]: { toString: () => string } }) => {
@@ -64,6 +58,10 @@ export const Table: FC<ITable> = ({
             )
         },
     )
+
+    const last = currentPage * perPage
+    const first = last - perPage
+    const current = filteredData?.slice(first, last)
 
     const pageNumber: number[] = []
     for (let i = 1; i <= Math.ceil(totalItems / perPage); i++) {
@@ -78,6 +76,16 @@ export const Table: FC<ITable> = ({
             return (
                 <td
                     key={col.key}
+                    onClick={
+                        onRow && col.key !== "actions"
+                            ? () =>
+                                onRow(
+                                    data[
+                                        onRowFieldName
+                                        ],
+                                )
+                            : undefined
+                    }
                     className="px-4 py-5 text-sm whitespace-nowrap"
                 >
                     {col.render(data)}
@@ -90,7 +98,16 @@ export const Table: FC<ITable> = ({
             return (
                 <td
                     key={col.key}
-                    onClick={() => col.render(data)}
+                    onClick={
+                        onRow && col.key !== "actions"
+                            ? () =>
+                                onRow(
+                                    data[
+                                        onRowFieldName
+                                        ],
+                                )
+                            : undefined
+                    }
                     className="px-4 py-5 text-sm whitespace-nowrap"
                 >
                     {col.render(column)}
@@ -100,6 +117,16 @@ export const Table: FC<ITable> = ({
             return (
                 <td
                     key={col.key}
+                    onClick={
+                        onRow && col.key !== "actions"
+                            ? () =>
+                                onRow(
+                                    data[
+                                        onRowFieldName
+                                        ],
+                                )
+                            : undefined
+                    }
                     className="whitespace-nowrap px-4 py-5 text-sm"
                 >
                     {column}
@@ -111,8 +138,9 @@ export const Table: FC<ITable> = ({
     const startIndex = (currentPage - 1) * perPage
 
     return (
-        <div className={classNames("border bg-white rounded-lg shadow-sm mt-3")}>
-            <div className="flex items-center justify-between flex-column flex-wrap md:flex-row space-y-4 md:space-y-0 pb-4 bg-white p-4">
+        <div className="border overflow-hidden bg-white rounded-lg shadow-sm mt-3">
+            <div
+                className="flex items-center justify-between flex-column flex-wrap md:flex-row space-y-4 md:space-y-0 pb-4 bg-white p-4">
                 <label htmlFor="table-search" className="sr-only">Search</label>
                 <div className="relative">
                     <div
@@ -124,37 +152,37 @@ export const Table: FC<ITable> = ({
                         </svg>
                     </div>
                     <input type="text" id="table-search-users"
+                           onChange={e => setSearchText(e.target.value)}
                            className="block p-2 ps-10 text-sm text-gray-900 border border-gray-200 focus:ring-2 focus:ring-opacity-25 focus:outline-none rounded-lg w-80 focus:ring-primary-gold focus:border-primary-gold"
                            placeholder="Search..." />
                 </div>
             </div>
-           <div className="overflow-auto h-full">
-               <table className="min-w-full bg-white">
-                <TableHeader
-                    rowSelection={rowSelection}
-                    columns={columns}
-                    totalItems={totalItems}
-                    onSort={onSort}
-                    data={filteredData}
-                />
+            <div className="overflow-auto h-full">
+                <table className="min-w-full bg-white">
+                    <TableHeader
+                        rowSelection={rowSelection}
+                        columns={columns}
+                        totalItems={totalItems}
+                        onSort={onSort}
+                        data={current}
+                    />
 
-                <tbody className="bg-white w-full divide-y  divide-gray-100">
-                <tr>
-                    {(filteredData?.length === 0 || !filteredData) &&
-                        !loadingData && (
-                            <td colSpan={8} className="text-primary-gold text-center mx-auto p-10">
-                                <DirectNormal
-                                    size="60"
-                                    className="mx-auto"
-                                />
-                                <p className="text-primary-charcol font-libre-sb mt-2">
-                                    No record found
-                                </p>
-                            </td>
-                        )}
-                    {loadingData && (
-                        <td colSpan={8} className="bg-white bg-opacity-70 p-16 w-full h-full text-center">
-                            <div role="status">
+                    <tbody className="bg-white w-full divide-y  divide-gray-100">
+                    <tr>
+                        {(current?.length === 0 || !current) &&
+                            !loadingData && (
+                                <td colSpan={8} className="text-primary-gold text-center mx-auto p-10">
+                                    <DirectNormal
+                                        size="60"
+                                        className="mx-auto"
+                                    />
+                                    <p className="text-primary-charcol font-libre-sb mt-2">
+                                        No record found
+                                    </p>
+                                </td>
+                            )}
+                        {loadingData && (
+                            <td colSpan={8} className="bg-white bg-opacity-70 p-16 w-full h-full text-center">
                                 <svg
                                     aria-hidden="true"
                                     className="w-full h-10 mr-2 text-center text-gray-200 animate-slow fill-primary-gold"
@@ -172,41 +200,32 @@ export const Table: FC<ITable> = ({
                                     />
                                 </svg>
                                 <span className="sr-only">Loading...</span>
-                            </div>
-                            <p className="ml-3 mt-3 font-libre-m text-primary-charcol">
-                                Loading...
-                            </p>
-                        </td>
-                    )}
-                </tr>
-                {filteredData?.length !== 0 &&
-                    filteredData?.map((d, index: number) => (
-                        <tr
-                            key={index}
-                            onClick={
-                                onRow
-                                    ? () =>
-                                        onRow(
-                                            d[
-                                                onRowFieldName
-                                                ],
-                                        )
-                                    : undefined
-                            }
-                            className={`${
-                                index % 2 === 0 ? "bg-gray-50" : "bg-white"
-                            } hover:bg-gray-50 text-primary-charcol cursor-pointer`}
-                        >
-                            <td className="px-4 py-5 text-sm">
-                                {pagination && pagination?.page > 1
-                                    ? pagination?.limit * pagination?.page + index + 1 - 10
-                                    : startIndex + index + 1}
+                                <p className="ml-3 mt-3 font-libre-m text-primary-charcol">
+                                    Loading...
+                                </p>
                             </td>
-                            {columns.map((col: any) => renderTableColumnData(col, d))}
-                        </tr>
-                    ))}
-                </tbody>
-            </table></div>
+                        )}
+                    </tr>
+                    {current?.length !== 0 &&
+                        current?.map((d, index: number) => (
+                            <tr
+                                key={index}
+
+                                className={`${
+                                    index % 2 === 0 ? "bg-gray-50" : "bg-white"
+                                } hover:bg-gray-50 text-primary-charcol cursor-pointer`}
+                            >
+                                <td className="px-4 py-5 text-sm">
+                                    {pagination && pagination?.page > 1
+                                        ? pagination?.limit * pagination?.page + index + 1 - 10
+                                        : startIndex + index + 1}
+                                </td>
+                                {columns.map((col: any) => renderTableColumnData(col, d))}
+                            </tr>
+                        ))}
+                    </tbody>
+                </table>
+            </div>
             <div className="border-t bg-white">
                 <div className="flex p-3 items-center justify-between">
                     <div className="flex-1 flex justify-between sm:hidden">
@@ -230,20 +249,15 @@ export const Table: FC<ITable> = ({
                             <p className="text-sm text-gray-700">
                                 Page{" "}
                                 <span className="font-medium">
-                        {pagination ? pagination.page : currentPage} of{" "}
+                        {currentPage} of{" "}
                                     {pageNumber.length}
                       </span>{" "}
                             </p>
                             <select
-                                // onChange={(eve) => {
-                                //   setCurrentPage(+eve.target.value);
-                                //   setPagination &&
-                                //     setPagination({
-                                //       ...pagination,
-                                //       page: +eve.target.value,
-                                //       limit: pagination?.limit,
-                                //     });
-                                // }}
+                                onChange={(eve) => {
+                                    setCurrentPage(+eve.target.value)
+
+                                }}
                                 className="p-1.5 rounded-md border border-gray-200 focus:border-gray-200 focus:ring-0 focus:outline-none text-xs text-gray-700"
                             >
                                 <option>Go to page</option>
@@ -255,36 +269,17 @@ export const Table: FC<ITable> = ({
                             </select>
                         </div>
 
-                        <nav
-                            className="relative z-0 inline-flex rounded-md shadow-sm -space-x-1"
-                            aria-label="Pagination"
-                        >
-                            <button
-                                // onClick={() => {
-                                //   setCurrentPage(currentPage - 1);
-                                //   setPagination &&
-                                //     setPagination({
-                                //       ...pagination,
-                                //       page: currentPage - 1,
-                                //       limit: pagination?.limit,
-                                //     });
-                                // }}
-                                className={`disabled:cursor-not-allowed disabled:bg-gray-100 relative focus:outline-none dis inline-flex items-center justify-center py-2 w-24 text-center rounded-l-md border border-gray-300 bg-white text-sm font-medium text-gray-500 hover:bg-gray-50`}
-                                disabled={currentPage === pageNumber[0]}
+                        <nav className="relative z-0 inline-flex rounded-md shadow-sm -space-x-1"
+                             aria-label="Pagination">
+                            <button onClick={() => setCurrentPage(currentPage - 1)}
+                                    className="disabled:cursor-not-allowed disabled:bg-gray-100 relative focus:outline-none inline-flex items-center justify-center py-2 w-24 text-center rounded-l-md border border-gray-300 bg-white text-sm font-medium text-gray-500 hover:bg-gray-50"
+                                    disabled={currentPage === pageNumber[0]}
                             >
                                 <span>Previous</span>
                             </button>
                             <button
-                                // onClick={() => {
-                                //   setCurrentPage(currentPage + 1);
-                                //   setPagination &&
-                                //     setPagination({
-                                //       ...pagination,
-                                //       page: pagination.page + 1,
-                                //       limit: pagination?.limit,
-                                //     });
-                                // }}
-                                className={`disabled:cursor-not-allowed disabled:bg-gray-100 relative focus:outline-none inline-flex items-center justify-center py-2 w-24 text-center rounded-r-md border border-gray-300 bg-white text-sm font-medium text-gray-500 hover:bg-gray-50`}
+                                onClick={() => setCurrentPage(currentPage + 1)}
+                                className="disabled:cursor-not-allowed disabled:bg-gray-100 relative focus:outline-none inline-flex items-center justify-center py-2 w-24 text-center rounded-r-md border border-gray-300 bg-white text-sm font-medium text-gray-500 hover:bg-gray-50"
                                 disabled={currentPage === pageNumber.length}
                             >
                                 <span>Next</span>

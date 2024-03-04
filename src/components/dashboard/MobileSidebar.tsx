@@ -1,6 +1,7 @@
 import React, { Dispatch, FC, Fragment, SetStateAction, useCallback, useEffect, useState } from "react"
 import { Dialog, Transition } from "@headlessui/react"
 import { Sidebar } from "./Sidebar"
+import { usePathname, useSearchParams } from "next/navigation"
 
 type Props = {
     sidebarOpen: boolean
@@ -10,6 +11,14 @@ type Props = {
 export const MobileSidebar: FC<Props> = ({ sidebarOpen, setSidebarOpen }) => {
     const [width, setWidth] = useState(0); // default width, detect on server.
     const handleResize = useCallback(() => setWidth(window.innerWidth) ,[]);
+
+    const pathname = usePathname()
+
+    useEffect(() => {
+        if (sidebarOpen) {
+            setSidebarOpen(!sidebarOpen);
+        }
+    }, [pathname]);
 
     useEffect(() => {
         window.addEventListener('resize', handleResize);

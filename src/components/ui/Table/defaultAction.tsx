@@ -1,14 +1,14 @@
 import { FC } from "react";
 
 interface Props {
-  id: number;
-  handleDelete: (arg: number) => void;
-  onEdit: (arg: number) => void;
+  id: string;
+  handleDelete: (arg: any) => void;
+  onEdit: (arg: any) => void;
 }
 
 export const DefaultActions: FC<Props> = ({ id, handleDelete, onEdit }) => {
   return (
-    <>
+    <div className="z-100">
       <button
         onClick={() => onEdit(id)}
         className="text-blue-500 mr-1.5 focus:outline-none"
@@ -47,6 +47,6 @@ export const DefaultActions: FC<Props> = ({ id, handleDelete, onEdit }) => {
           />
         </svg>
       </button>
-    </>
+    </div>
   );
 };

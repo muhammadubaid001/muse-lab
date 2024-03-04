@@ -7,8 +7,6 @@ import Link from "next/link"
 import { Fragment } from "react"
 
 const TenantLayout = ({ children }) => {
-    const tab: string = "Candslugates"
-
     const { slug } = useParams()
     const router = useRouter()
     const pathname = usePathname()
@@ -23,7 +21,7 @@ const TenantLayout = ({ children }) => {
                 <Breadcrumb  />
             </div>
             <div className="text-sm p-1.5 mt-4 text-center text-gray-500 border border-gray-200 rounded-md bg-gray-100">
-                <div className="flex flex-wrap -mb-px gap-3">
+                <div className="flex overflow-x-auto md:overflow-x-clip -mb-px gap-3">
                     <Link
                         href={`/dashboard/tenants/${slug}`}
                         className={classNames(tabStyles.default, {
@@ -65,7 +63,7 @@ const TenantLayout = ({ children }) => {
 
 const tabStyles = {
     default:
-        "px-5 font-libre-sb py-2.5 flex-1 hover:shadow-tab hover:text-primary-charcol transition-all ease-in-out hover:bg-gray-50 hover:rounded-md",
+        "px-5 font-libre-sb py-2.5 flex-1 hover:shadow-tab whitespace-nowrap hover:text-primary-charcol transition-all ease-in-out hover:bg-gray-50 hover:rounded-md",
     active: "shadow-tab text-gray-700 shadow-md bg-gray-50 rounded-md",
     select:
         "focus:border-gray-300 w-full focus:ring-0 focus:outline-none rounded-md border border-gray-200 text-gray-700 text-xs",

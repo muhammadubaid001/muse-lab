@@ -45,6 +45,11 @@
 box-shadow: rgba(16, 24, 40, 0.1) 0px 1px 3px, rgba(16, 24, 40, 0.06) 0px 1px 2px;
 }
 
+.react-confirm-alert-overlay {
+    background: rgba(255, 255, 255, 0.7) !important;
+    backdrop-filter: blur(1px) !important;
+}
+
 ::-webkit-scrollbar {
     height: 4px;
     -webkit-transition: .45s;
@@ -62,6 +67,19 @@ box-shadow: rgba(16, 24, 40, 0.1) 0px 1px 3px, rgba(16, 24, 40, 0.06) 0px 1px 2p
 ::-webkit-scrollbar-track {
     background: #0000;
 }
+
+.swal-footer {
+    background-color: rgb(245, 248, 250);
+    margin-top: 20px;
+    text-align: center;
+    padding: 10px;
+    border-top: 1px solid #e9eef1;
+    overflow: hidden;
+}
+.swal-title {
+    margin-top: -15px;
+}
+
 
 /*:root {*/
 /*  --foreground-rgb: 0, 0, 0;*/

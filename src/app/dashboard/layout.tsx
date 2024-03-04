@@ -1,10 +1,15 @@
 "use client"
 import React, { useState } from "react"
 import { Sidebar } from "@/components/dashboard/Sidebar"
+
+import "react-notifications-component/dist/theme.css"
+
+
 import { useSession } from "next-auth/react"
 import { Loader } from "@/components/Loader"
 import { MobileSidebar } from "@/components/dashboard/MobileSidebar"
 import { HambergerMenu } from "iconsax-react"
+import { ReactNotifications } from "react-notifications-component"
 
 export default function DashboardLayout({ children }: { children: React.ReactNode }) {
     const [sidebarOpen, setSidebarOpen] = useState(false)
@@ -12,6 +17,8 @@ export default function DashboardLayout({ children }: { children: React.ReactNod
 
     return status === "loading" ? <Loader /> : (
         <div className="flex h-screen bg-gray-50">
+            <ReactNotifications />
+
             <div className="block lg:hidden">
                 <MobileSidebar
                     sidebarOpen={sidebarOpen}

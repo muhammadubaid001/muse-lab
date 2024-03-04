@@ -56,7 +56,7 @@ export const SideSheet: FC<Props> = ({
                                             </button>
                                             <p className="text-xl text-primary-charcol">{title}</p>
                                         </Dialog.Title>
-                                        <div className="relative flex-1 p-6">
+                                        <div className="relative flex-1 px-6 py-4">
                                             {children}
                                         </div>
                                     </div>
