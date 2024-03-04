@@ -1,6 +1,6 @@
 'use client'
 import { Table } from '@/components/ui/Table/Table'
-import { useEffect, useState } from "react"
+import { useState } from "react"
 import useAxiosAuth from '@/lib/hooks/useAxiosAuth'
 import { Breadcrumb } from '@/components/Breadcrumb'
 import { SideSheet } from "@/components/ui/Sidesheet"

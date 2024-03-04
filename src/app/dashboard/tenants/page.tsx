@@ -88,10 +88,10 @@ export default function Page() {
                         ...current,
                         slug: value,
                     })} container="" label="Slug" />
-                    <Input value={current.github_id} placeholder="Github" onChange={value => setCurrent({
-                        ...current,
-                        github_id: value,
-                    })} container="" label="Github" />
+                    {/*<Input value={current.github_id} placeholder="Github" onChange={value => setCurrent({*/}
+                    {/*    ...current,*/}
+                    {/*    github_id: value,*/}
+                    {/*})} container="" label="Github" />*/}
                     <Input value={current.owner_id} placeholder="Owner" onChange={value => setCurrent({
                         ...current,
                         owner_id: value,
