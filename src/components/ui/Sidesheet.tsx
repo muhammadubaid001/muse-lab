@@ -14,7 +14,6 @@ type Props = {
     setSidebarOpen: Dispatch<SetStateAction<boolean>>;
     children: ReactNode;
     handleClickPrimary?: any
-    handleClickSecondary?: any
     title: string;
 };
 
@@ -23,7 +22,6 @@ export const SideSheet: FC<Props> = ({
                                          sidebarOpen,
                                          setSidebarOpen,
                                          handleClickPrimary,
-                                         handleClickSecondary,
                                          children,
                                      }) => {
     return (
@@ -74,7 +72,7 @@ export const SideSheet: FC<Props> = ({
                                                            container="flex-1" />
                                             <SecondaryButton type="button" className="px-4 py-1.5 w-full "
                                                              label="Cancel"
-                                                             onClick={() => handleClickSecondary && handleClickSecondary()}
+                                                             onClick={() => setSidebarOpen(false)}
                                                              container="flex-1" />
                                         </div>
                                     </div>

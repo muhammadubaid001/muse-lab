@@ -9,10 +9,12 @@ import { DefaultActions } from "@/components/ui/Table/defaultAction"
 import { useNotifications } from "@/lib/hooks/useNotification"
 import swal from "sweetalert"
 import { alertConfig } from "@/utils/alertConfig"
+import { Input } from "@/components/ui/Input"
 
 interface IApplication {
     id: string,
     name: string,
+    slug: string,
     platform: string,
     owner: {
         name: string,
@@ -43,9 +45,10 @@ export default function Page() {
             }
         });
     }
-    const [current, setCurrent] = useState<IApplication | undefined>({
+    const [current, setCurrent] = useState<IApplication >({
         id: '',
         name: '',
+        slug: '',
         platform: '',
         owner: {
             name: '',
@@ -57,19 +60,37 @@ export default function Page() {
     const { data, setData, loading } = useFetchData('/applications?offset=0&limit=100')
 
     const handleClickRow = (id) => {
-        const findApp = data.find((item: { id: string }) => item.id === id)
+        const findApp: any = data.find((item: { id: string }) => item.id === id)
         setCurrent(findApp)
+    }
+
+    const handleUpdate = () => {
+        axios.put(`/applications/${current.id}`).then(resp => {
+            console.log(resp)
+            setOpen(false)
+        }).catch(error => {
+            console.log(error)
+        })
     }
 
     return (
         <div className="flex flex-col gap-2">
             <Breadcrumb />
-            <SideSheet sidebarOpen={open} setSidebarOpen={setOpen} title={current?.name || ''}>
-                <div className="flex flex-col">
-                    <div className="flex gap-2 items-center">
-                        <p>Platform: </p>
-                        <p>{current?.platform}</p>
-                    </div>
+            <SideSheet handleClickPrimary={handleUpdate} sidebarOpen={open} setSidebarOpen={setOpen} title={current?.name || ''}>
+                <div className="flex flex-col gap-3">
+                    <Input value={current.name} placeholder="Name" onChange={value => setCurrent({
+                        ...current,
+                        name: value,
+                    })} container="" label="Name" />
+                    <Input value={current.slug} placeholder="Slug" onChange={value => setCurrent({
+                        ...current,
+                        slug: value,
+                    })} container="" label="Slug" />
+                    <Input value={current.platform} placeholder="Platform" onChange={value => setCurrent({
+                        ...current,
+                        platform: value,
+                    })} container="" label="Platform" />
+                    <Input disabled value={current.owner.id} placeholder="Owner" onChange={value => console.log(value)} container="" label="Owner" />
                 </div>
             </SideSheet>
             <Table
