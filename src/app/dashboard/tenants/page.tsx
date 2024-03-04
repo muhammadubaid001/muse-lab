@@ -50,16 +50,11 @@ export default function Page() {
     return (
         <div className="flex flex-col gap-2">
             <Breadcrumb />
-            <SideSheet sidebarOpen={open} setSidebarOpen={setOpen} title="Edit Tenant">
+            <SideSheet handleClickPrimary={() => console.log("")} handleClickSecondary={() => console.log("")} sidebarOpen={open} setSidebarOpen={setOpen} title="Edit Tenant">
                 <div className="flex flex-col gap-3">
                     <Input value="" placeholder="Name" onChange={value => console.log(value)} container="" label="Name" />
                     <Input value="" placeholder="Github" onChange={value => console.log(value)} container="" label="Github" />
                     <Input value="" placeholder="Value" onChange={value => console.log(value)} container="" label="Value" />
-                    <div className="flex gap-2 mt-2">
-                        <PrimaryButton type="button" className="px-4 py-2 w-full" label="Save" onClick={() => console.log("here")} container="flex-1" />
-                        <SecondaryButton type="button" className="px-4 py-1.5 w-full " label="Cancel" onClick={() => console.log("here")} container="flex-1" />
-                    </div>
-
                 </div>
             </SideSheet>
             <Table

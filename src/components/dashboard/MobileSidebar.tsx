@@ -45,7 +45,7 @@ export const MobileSidebar: FC<Props> = ({ sidebarOpen, setSidebarOpen }) => {
                     leave="ease-in duration-200"
                     leaveFrom="opacity-100"
                     leaveTo="opacity-0">
-                    <Dialog.Overlay className="fixed inset-0 bg-black/10 backdrop-blur-[2px]"
+                    <Dialog.Overlay className="fixed inset-0 bg-black/20"
                                     onClick={() => setSidebarOpen(false)}
                     />
                 </Transition.Child>
