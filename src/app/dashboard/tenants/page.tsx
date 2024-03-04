@@ -10,8 +10,8 @@ import { useNotifications } from "@/lib/hooks/useNotification"
 import { SideSheet } from "@/components/ui/Sidesheet"
 import { useState } from "react"
 import { Input } from "@/components/ui/Input"
-import { Button } from "@headlessui/react/dist/components/button/button"
 import { PrimaryButton, SecondaryButton } from "@/components/ui/Button"
+import { alertConfig } from "@/utils/alertConfig"
 
 export default function Page() {
     const columns = [
@@ -29,22 +29,7 @@ export default function Page() {
     const { successMessage } = useNotifications()
 
     const handleDelete = id => {
-        swal({
-            title: "Are you sure, you want to delete?",
-            icon: "warning",
-            className: "w-[500px]",
-            buttons: {
-                cancel: {
-                    text: "Cancel",
-                    visible: true,
-                },
-                confirm: {
-                    text: "Delete",
-                    className: "bg-primary text-white",
-                },
-            },
-            dangerMode: true,
-        }).then((willDelete) => {
+        swal(alertConfig).then((willDelete) => {
           if(willDelete) {
               axios.delete(`/tenants/${id}`).then(resp => {
                   console.log(resp)

@@ -3,6 +3,11 @@ import { Table } from "@/components/ui/Table/Table"
 import { useParams } from "next/navigation"
 import { useEffect, useState } from "react"
 import useAxiosAuth from "@/lib/hooks/useAxiosAuth"
+import swal from "sweetalert"
+import { alertConfig } from "@/utils/alertConfig"
+import { DefaultActions } from "@/components/ui/Table/defaultAction"
+import { useFetchData } from "@/lib/hooks/useFetchData"
+import { useNotifications } from "@/lib/hooks/useNotification"
 
 const SpecificTenant = () => {
     const columns = [
@@ -10,25 +15,32 @@ const SpecificTenant = () => {
         { key: "name", dbColName: "name", title: "Name"},
         { key: "github_id", dbColName: "github_id", title: "Github ID"},
         { key: "url", dbColName: "url", title: "URL"},
-        { key: "tenant", dbColName: "tenant", title: "Tenant", render: tenant => <p>{tenant.name}</p>}
+        { key: "tenant", dbColName: "tenant", title: "Tenant", render: tenant => <p>{tenant.name}</p>},
+        {
+            key: "actions",
+            dbColName: "id",
+            title: "Actions",
+            render: (id) => <DefaultActions id={id} handleDelete={() => handleDelete(id)}
+                                            onEdit={() => console.log("Edit")} />,
+        },
     ]
-    const [loading, setLoading] = useState(false)
-    const [data, setData] = useState([])
 
     const { slug } = useParams()
     const axios = useAxiosAuth()
+    const { successMessage } = useNotifications()
+    const { data, loading } = useFetchData(`/d2x/${slug}/github-orgs`)
 
-    useEffect(() => {
-        setLoading(true)
-        axios.get(`/d2x/${slug}/github-orgs`).then(resp => {
-            console.log(resp)
-            setData(resp.data)
-        }).catch(error => {
-            console.log(error)
-        }).finally(() => {
-            setLoading(false)
+    const handleDelete = (id) => {
+        swal(alertConfig).then(willDelete => {
+            if (willDelete) {
+                axios.delete(`/d2x/${slug}/orgs/${id}`).then(resp => {
+                    console.log(resp)
+                    successMessage("Job deleted successfully")
+                })
+            }
         })
-    }, [])
+    }
+
 
     return(
         <div>

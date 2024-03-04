@@ -8,6 +8,7 @@ import { useFetchData } from "@/lib/hooks/useFetchData"
 import { DefaultActions } from "@/components/ui/Table/defaultAction"
 import { useNotifications } from "@/lib/hooks/useNotification"
 import swal from "sweetalert"
+import { alertConfig } from "@/utils/alertConfig"
 
 interface IApplication {
     id: string,
@@ -33,22 +34,7 @@ export default function Page() {
     const { successMessage } = useNotifications()
 
     const handleDelete = id => {
-        swal({
-            title: "Are you sure, you want to delete?",
-            icon: "warning",
-            className: "w-[500px]",
-            buttons: {
-                cancel: {
-                    text: "Cancel",
-                    visible: true,
-                },
-                confirm: {
-                    text: "Delete",
-                    className: "bg-primary text-white",
-                },
-            },
-            dangerMode: true,
-        }).then((willDelete) => {
+        swal(alertConfig).then((willDelete) => {
             if(willDelete) {
                 axios.delete(`/applications/${id}`).then(resp => {
                     console.log(resp)
