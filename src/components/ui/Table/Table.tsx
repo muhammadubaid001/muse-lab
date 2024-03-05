@@ -3,6 +3,7 @@ import { TableHeader } from "./TableHeader"
 
 import classNames from "classnames"
 import { DirectNormal } from "iconsax-react"
+import { useFetchData } from "@/lib/hooks/useFetchData"
 
 export interface IColumn {
     title: string;
@@ -18,6 +19,7 @@ export interface ITable {
     data: any;
     totalItems: number;
     setPagination?: any;
+    onTenantChange?: any
     columnFilters?: any;
     onSort?: (type: string) => void;
     pagination?: any;
@@ -43,6 +45,7 @@ export const Table: FC<ITable> = ({
                                       data,
                                       totalItems,
                                       onSort,
+                                      onTenantChange,
                                       rowSelection,
                                       onRow,
                                       onRowFieldName = "id",
@@ -50,6 +53,8 @@ export const Table: FC<ITable> = ({
     const [perPage] = useState(10)
     const [currentPage, setCurrentPage] = useState(1)
     const [searchText, setSearchText] = useState("")
+
+    const { data: tenants } = useFetchData('/tenants')
 
     const filteredData = data?.filter(
         (item: { [x: string]: { toString: () => string } }) => {
@@ -140,21 +145,19 @@ export const Table: FC<ITable> = ({
     return (
         <div className="border overflow-hidden bg-white rounded-lg shadow-sm mt-3">
             <div
-                className="flex items-center justify-between flex-column flex-wrap md:flex-row space-y-4 md:space-y-0 pb-4 bg-white p-4">
-                <label htmlFor="table-search" className="sr-only">Search</label>
+                className="flex items-center gap-2 pb-4 bg-white p-4">
+                {/*<label htmlFor="table-search" className="text-sm text-primary-charcol" >Select Tenant</label>*/}
                 <div className="relative">
-                    <div
-                        className="absolute inset-y-0 rtl:inset-r-0 start-0 flex items-center ps-3 pointer-events-none">
-                        <svg className="w-4 h-4 text-gray-400" aria-hidden="true"
-                             xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 20 20">
-                            <path stroke="currentColor" strokeLinecap="round" strokeLinejoin="round"
-                                  strokeWidth="2" d="m19 19-4-4m0-7A7 7 0 1 1 1 8a7 7 0 0 1 14 0Z" />
-                        </svg>
-                    </div>
-                    <input type="text" id="table-search-users"
-                           onChange={e => setSearchText(e.target.value)}
-                           className="block p-2 ps-10 text-sm text-gray-900 border border-gray-200 focus:ring-2 focus:ring-opacity-25 focus:outline-none rounded-lg w-80 focus:ring-primary-gold focus:border-primary-gold"
-                           placeholder="Search..." />
+
+                    <select
+                           onChange={e => onTenantChange(e.target.value)}
+                           className="block py-2.5 px-3.5 shadow-sm text-sm text-gray-900 border border-gray-200 focus:ring-2 focus:ring-opacity-25 focus:outline-none rounded-lg w-80 focus:ring-primary-gold focus:border-primary-gold"
+                          >
+                        <option disabled selected>Select Tenant</option>
+                        {tenants.map((item: any) => (
+                            <option key={item.id} value={item.slug}>{item.name}</option>
+                        ))}
+                    </select>
                 </div>
             </div>
             <div className="overflow-auto h-full">

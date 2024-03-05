@@ -25,14 +25,16 @@ const SpecificTenant = () => {
         },
     ]
 
-    const { slug } = useParams()
-    const axios = useAxiosAuth()
-    const { successMessage } = useNotifications()
-    const { data, loading } = useFetchData(`/d2x/${slug}/github-orgs`)
+    // const { slug } = useParams()
+    // const axios = useAxiosAuth()
+    // const { successMessage } = useNotifications()
+    // const { data, loading } = useFetchData(`/d2x/${slug}/github-orgs`)
 
 
     return(
-            <Table data={data} loadingData={loading} totalItems={data.length} columns={columns} />
+           <div>
+               Talent
+           </div>
     )
 }
 

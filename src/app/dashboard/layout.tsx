@@ -10,6 +10,7 @@ import { Loader } from "@/components/Loader"
 import { MobileSidebar } from "@/components/dashboard/MobileSidebar"
 import { HambergerMenu } from "iconsax-react"
 import { ReactNotifications } from "react-notifications-component"
+import { Breadcrumb } from "@/components/Breadcrumb"
 
 export default function DashboardLayout({ children }: { children: React.ReactNode }) {
     const [sidebarOpen, setSidebarOpen] = useState(false)
@@ -35,7 +36,7 @@ export default function DashboardLayout({ children }: { children: React.ReactNod
                    <button type="button" className="block mb-3 lg:hidden" onClick={() => setSidebarOpen(true)}>
                        <HambergerMenu />
                    </button>
-
+<Breadcrumb />
                     {children}
                 </main>
             </div>

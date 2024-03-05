@@ -63,7 +63,6 @@ export default function Page() {
 
     return (
         <div className="flex flex-col gap-2">
-            <Breadcrumb />
             <SideSheet handleClickPrimary={() => console.log("Clicked")} sidebarOpen={open} setSidebarOpen={setOpen} title={current?.name || ''}>
                 <div className="flex flex-col gap-3">
                     <Input value={current.name} placeholder="Name" onChange={value => setCurrent({

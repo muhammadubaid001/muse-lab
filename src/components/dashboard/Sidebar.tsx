@@ -2,7 +2,7 @@
 import { NavLink } from '@/components/dashboard/NavLink'
 import { usePathname } from 'next/navigation'
 import { signOut, useSession } from 'next-auth/react'
-import { Category, Profile2User, UserOctagon } from 'iconsax-react'
+import { Book, Category, Command, House, Profile2User, Trello, UserOctagon } from "iconsax-react"
 
 export const Sidebar = () => {
     const pathname = usePathname()
@@ -35,11 +35,47 @@ export const Sidebar = () => {
                                 icon={<Category size="26" />}
                                 to='/dashboard/applications'
                             />
+                            {/*<NavLink*/}
+                            {/*    active={pathname.includes('tenants')}*/}
+                            {/*    label='Tenants'*/}
+                            {/*    icon={<UserOctagon size="26"/>}*/}
+                            {/*    to='/dashboard/tenants'*/}
+                            {/*/>*/}
                             <NavLink
-                                active={pathname.includes('tenants')}
-                                label='Tenants'
+                                active={pathname === '/dashboard/tenants/orgs'}
+                                label='Github Orgs'
                                 icon={<UserOctagon size="26"/>}
-                                to='/dashboard/tenants'
+                                to='/dashboard/tenants/orgs'
+                            />
+                            <NavLink
+                                active={pathname === '/dashboard/tenants/repos'}
+                                label='Github Repos'
+                                icon={<Book size="26"/>}
+                                to='/dashboard/tenants/repos'
+                            />
+                            <NavLink
+                                active={pathname === '/dashboard/tenants/users'}
+                                label='Github Users'
+                                icon={<UserOctagon size="26"/>}
+                                to='/dashboard/tenants/users'
+                            />
+                            <NavLink
+                                active={ pathname.includes('jobs')}
+                                label='Jobs'
+                                icon={<Trello size="26"/>}
+                                to='/dashboard/tenants/jobs'
+                            />
+                            <NavLink
+                                active={pathname === '/dashboard/tenants/salesforce'}
+                                label='Salesforce Orgs'
+                                icon={<House size="26"/>}
+                                to='/dashboard/tenants/salesforce'
+                            />
+                            <NavLink
+                                active={pathname=== '/dashboard/tenants/plans'}
+                                label='Plans'
+                                icon={<Command size="26"/>}
+                                to='/dashboard/tenants/plans'
                             />
                         </nav>
                     </div>
