@@ -25,23 +25,10 @@ const Orgs = () => {
         },
     ]
 
-    const [data, setData] = useState([])
-    const [loading, setLoading] = useState(false)
+    const tenant = localStorage.getItem("tenant")
+    const { data, loading } = useFetchData(`/d2x/${tenant}/github-orgs`)
     const pathname = usePathname()
-
-    const axios = useAxiosAuth()
-
-    const fetchData = value => {
-        setLoading(true)
-        axios.get(`/d2x/${value}/github-orgs`).then(resp => {
-            console.log(resp)
-            setLoading(resp.data)
-            setLoading(false)
-        })
-    }
-
     const slug = ""
-
 
     return(
         <Fragment>
@@ -81,7 +68,7 @@ const Orgs = () => {
                     </Link>
                 </div>
             </div>
-        <Table data={data} onTenantChange={value => fetchData(value)} loadingData={loading} totalItems={data.length} columns={columns} />
+        <Table data={data} loadingData={loading} totalItems={data.length} columns={columns} />
         </Fragment>
     )
 }

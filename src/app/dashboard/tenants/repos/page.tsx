@@ -1,9 +1,6 @@
 "use client"
-import { useParams } from "next/navigation"
 import { Table } from "@/components/ui/Table/Table"
 import { useFetchData } from "@/lib/hooks/useFetchData"
-import { useState } from "react"
-import useAxiosAuth from "@/lib/hooks/useAxiosAuth"
 
 const Repos = () => {
     const columns = [
@@ -15,23 +12,12 @@ const Repos = () => {
         { key: "org", dbColName: "org", title: "Org", render: org => <p>{org.name}</p> },
 
     ]
-
-    const [data, setData] = useState([])
-    const [loading, setLoading] = useState(false)
-
-    const axios = useAxiosAuth()
-
-    const fetchData = (tenant) => {
-        setLoading(true)
-        axios.get(`/d2x/${tenant}/github-repos`).then(resp => {
-            console.log()
-            setData(resp.data)
-            setLoading(false)
-        })
-    }
+    const tenant = localStorage.getItem("tenant")
+    const { data, loading } = useFetchData(`/d2x/${tenant}/github-repos`)
 
     return (
-        <Table data={data} onTenantChange={value => fetchData(value)} totalItems={data.length} loadingData={loading} columns={columns} />
+        <Table data={data} totalItems={data.length} loadingData={loading}
+               columns={columns} />
     )
 }
 

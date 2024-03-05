@@ -1,23 +1,19 @@
 "use client"
-import { Fragment, useEffect, useState } from "react"
-import useAxiosAuth from "@/lib/hooks/useAxiosAuth"
 import { useParams, useRouter } from "next/navigation"
 import { Table } from "@/components/ui/Table/Table"
 import classNames from "classnames"
-import { SideSheet } from "@/components/ui/Sidesheet"
-import { useFetchData } from "@/lib/hooks/useFetchData"
 import { DefaultActions } from "@/components/ui/Table/defaultAction"
-import { useNotifications } from "@/lib/hooks/useNotification"
 import swal from "sweetalert"
 import { alertConfig } from "@/utils/alertConfig"
-import { router } from "next/client"
+import { useFetchData } from "@/lib/hooks/useFetchData"
 
 const Badge = ({ status }) => {
     return (
         <span
             className={classNames("px-3 py-1  text-xs text-center rounded-full", {
-                "bg-green-100 text-[#027a48]": status === "accepted",
-                "bg-red-100 text-[#c01048]": status === "pending",
+                "bg-green-100 text-[#027a48]": status === "success",
+                "bg-yellow-100 text-yellow-700": status === "pending",
+                "bg-red-100 text-[#c01048]": status === "failed",
             })}
         >
             {status}
@@ -41,23 +37,10 @@ const Jobs = () => {
                                             onEdit={() => console.log("Edit")} />,
         },
     ]
-    const [open, setOpen] = useState(false)
-    const [current, setCurrent] = useState<any>(null)
-    const [data, setData] = useState([])
-    const [loading, setLoading] = useState(false)
-    const [tenant, setTenant] = useState('')
 
-    const axios = useAxiosAuth()
+    const tenant = localStorage.getItem("tenant")
+    const { data, loading } = useFetchData(`/d2x/${tenant}/jobs`)
     const router = useRouter()
-
-    const fetchData = value => {
-        setTenant(value)
-        setLoading(true)
-        axios.get(`/d2x/${value}/jobs`).then(resp => {
-            setData(resp.data)
-            setLoading(false)
-        })
-    }
 
     const handleDelete = (id) => {
         swal(alertConfig).then(willDelete => {
@@ -76,7 +59,6 @@ const Jobs = () => {
                 onRow={(id) => handleClickRow(id)}
                 loadingData={loading}
                 data={data}
-                onTenantChange={value => fetchData(value)}
                 totalItems={data.length}
                 columns={columns}
             />

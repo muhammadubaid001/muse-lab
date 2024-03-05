@@ -4,6 +4,7 @@ import { TableHeader } from "./TableHeader"
 import classNames from "classnames"
 import { DirectNormal } from "iconsax-react"
 import { useFetchData } from "@/lib/hooks/useFetchData"
+import { Input } from "@/components/ui/Input"
 
 export interface IColumn {
     title: string;
@@ -54,7 +55,6 @@ export const Table: FC<ITable> = ({
     const [currentPage, setCurrentPage] = useState(1)
     const [searchText, setSearchText] = useState("")
 
-    const { data: tenants } = useFetchData('/tenants')
 
     const filteredData = data?.filter(
         (item: { [x: string]: { toString: () => string } }) => {
@@ -149,15 +149,7 @@ export const Table: FC<ITable> = ({
                 {/*<label htmlFor="table-search" className="text-sm text-primary-charcol" >Select Tenant</label>*/}
                 <div className="relative">
 
-                    <select
-                           onChange={e => onTenantChange(e.target.value)}
-                           className="block py-2.5 px-3.5 shadow-sm text-sm text-gray-900 border border-gray-200 focus:ring-2 focus:ring-opacity-25 focus:outline-none rounded-lg w-80 focus:ring-primary-gold focus:border-primary-gold"
-                          >
-                        <option disabled selected>Select Tenant</option>
-                        {tenants.map((item: any) => (
-                            <option key={item.id} value={item.slug}>{item.name}</option>
-                        ))}
-                    </select>
+                    <Input label="" onChange={value => console.log(value )} value="" container="w-96" placeholder="Search..." />
                 </div>
             </div>
             <div className="overflow-auto h-full">

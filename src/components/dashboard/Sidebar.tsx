@@ -3,9 +3,13 @@ import { NavLink } from '@/components/dashboard/NavLink'
 import { usePathname } from 'next/navigation'
 import { signOut, useSession } from 'next-auth/react'
 import { Book, Category, Command, House, Profile2User, Trello, UserOctagon } from "iconsax-react"
+import React from "react"
+import { useFetchData } from "@/lib/hooks/useFetchData"
 
 export const Sidebar = () => {
     const pathname = usePathname()
+    const { data: tenants } = useFetchData('/tenants')
+
     const { data } = useSession()
     return (
         <div className='flex md:flex-shrink-0 h-full bg-white shadow'>
@@ -15,12 +19,24 @@ export const Sidebar = () => {
                 <div className='flex flex-col flex-grow overflow-y-auto'>
                     <div className='flex-grow flex flex-col'>
                         <div className='mt-4'>
-                            <div className='w-56 mx-auto my-3'>
+                            <div className='w-56 mx-auto mt-3 mb-4'>
                                 <img
                                     alt='logo'
                                     src='/ndg_MuseLab_Primary%20Logo_Gold%20_%20300px.png'
                                     className='h-full w-full mx-auto object-contain'
                                 />
+                            </div>
+                            <div className="mt-2">
+                                <select
+                                    onChange={e => localStorage.setItem("tenant", e.target.value)}
+                                    value={localStorage.getItem("tenant") as string}
+                                    className="block py-3 px-3.5 shadow-sm w-72 mx-auto text-sm text-gray-900 border border-gray-200 focus:ring-2 focus:ring-opacity-25 focus:outline-none rounded-lg  focus:ring-primary-gold focus:border-primary-gold"
+                                >
+                                    <option disabled selected>Select Tenant</option>
+                                    {tenants.map((item: any) => (
+                                        <option key={item.id} value={item.slug}>{item.name}</option>
+                                    ))}
+                                </select>
                             </div>
                         </div>
                         <nav className='flex-1 mt-1'>
