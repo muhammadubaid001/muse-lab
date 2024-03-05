@@ -52,7 +52,6 @@ export default function Page() {
 
     return (
         <div className="flex flex-col gap-2">
-            <Breadcrumb label="Users" />
             <SideSheet sidebarOpen={open} setSidebarOpen={setOpen} title="Edit User">
                 <Input value={current.username} placeholder="Username" onChange={value => setCurrent({
                     ...current,
